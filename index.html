@@ -16,7 +16,7 @@
   <a class="brand" href="#top" aria-label="Varenya Chivukula home"><b>VC</b><span>ENGINEER · RESEARCHER · BUILDER</span></a>
   <button class="menu" aria-expanded="false" aria-controls="navigation">Menu +</button>
   <nav id="navigation" aria-label="Main navigation">
-    <a href="#work">Work</a><a href="#experience">Experience</a><a href="#research">Research</a><a href="#about">About</a><a class="nav-contact" href="#contact">Let's connect <span>↗</span></a>
+    <a href="#experience">Experience</a><a href="#work">Work</a><a href="#research">Research</a><a href="#about">About</a><a class="nav-contact" href="#contact">Let's connect <span>↗</span></a>
   </nav>
 </header>
 <main id="main">
@@ -26,19 +26,50 @@
     <h1><span>Varenya</span><br><em>Chivukula.</em></h1>
     <p class="hero-line">I build intelligent systems that leave the screen and <strong>do something in the real world.</strong></p>
     <p class="intro">AI, autonomous robotics, embedded systems and engineering research — from industrial computer vision at ADNOC to an award-winning companion robot.</p>
-    <div class="hero-actions"><a class="button magnetic" href="#work">Explore my work <span>↘</span></a><a class="text-link" href="Resume.pdf" download>Download résumé ↓</a></div>
+    <div class="hero-actions"><a class="button magnetic" href="#experience">Explore my experience <span>↘</span></a><a class="text-link" href="Resume.pdf" download>Download résumé ↓</a></div>
     <div class="status"><span></span> Open to graduate roles, internships, research & postgraduate opportunities</div>
   </div>
-  <a class="hero-project reveal" href="#avaa">
-    <div class="hero-project-top"><span>FEATURED / 01</span><span>ROBOTICS · AI · EMBEDDED</span></div>
-    <div class="hero-photo-wrap"><img src="avaa-prototype.png" alt="AVAA intelligent child companion robot prototype" width="984" height="1314"><div class="image-shade"></div><span class="hero-award">JAMES DYSON AWARD<br><strong>UAE NATIONAL RUNNER-UP · 2026</strong></span></div>
-    <div class="hero-project-bottom"><div><span>AVAA</span><h3>Perception. Navigation.<br>Connection.</h3></div><span class="hero-project-arrow">↘</span></div>
-  </a>
+  <div class="hero-system reveal" aria-label="Engineering systems map">
+    <div class="system-top"><span>SYSTEMS / 01</span><span>HOW I LIKE TO BUILD</span></div>
+    <div class="system-canvas">
+      <div class="system-grid" aria-hidden="true"></div>
+      <span class="system-axis axis-x">SOFTWARE <i></i> HARDWARE</span>
+      <div class="system-node node-perception"><b>01</b><strong>PERCEPTION</strong><span>AI · VISION</span></div>
+      <div class="system-node node-control"><b>02</b><strong>CONTROL</strong><span>DECIDE · ADAPT</span></div>
+      <div class="system-node node-embedded"><b>03</b><strong>EMBEDDED</strong><span>SENSE · ACT</span></div>
+      <div class="system-node node-research"><b>04</b><strong>RESEARCH</strong><span>TEST · MEASURE</span></div>
+      <div class="system-core"><span>ENGINEERING</span><strong>REAL<br>WORLD</strong><small>SYSTEMS</small></div>
+      <svg class="system-lines" viewBox="0 0 600 460" preserveAspectRatio="none" aria-hidden="true"><path d="M300 230 L145 105 M300 230 L455 105 M300 230 L145 355 M300 230 L455 355"/><circle cx="300" cy="230" r="92"/><circle cx="300" cy="230" r="150"/></svg>
+    </div>
+    <div class="system-bottom"><span>AI</span><span>ROBOTICS</span><span>CONTROL</span><span>EMBEDDED</span><span>RESEARCH</span></div>
+  </div>
   <div class="hero-foot"><span>BASED IN ABU DHABI · UAE</span><span>SCROLL TO EXPLORE ↓</span></div>
 </section>
 
+<section id="experience" class="section experience experience-featured">
+  <div class="experience-head reveal">
+    <div><div class="section-label">01 / PROFESSIONAL EXPERIENCE</div><h2>Engineering where<br><em>the constraints are real.</em></h2></div>
+    <p class="section-intro">Industry experience across industrial digitalisation, applied AI, automation and satellite engineering.</p>
+  </div>
+
+  <article class="adnoc-feature reveal">
+    <div class="experience-brand"><span class="experience-index">01</span><div><span class="eyebrow">JUL–SEP 2025 · ABU DHABI</span><h3>ADNOC ONSHORE</h3><p>Digital Technical Solutions Intern<br><strong>Digital Analytics & Automation</strong></p></div></div>
+    <div class="adnoc-story">
+      <p class="experience-lead">Worked on real industrial systems — from computer-vision safety monitoring to operational dashboards and plant data infrastructure.</p>
+      <div class="experience-metrics"><div><strong>500+</strong><span>PI tags audited</span></div><div><strong>518</strong><span>images in AI pilot</span></div><div><strong>&gt;90%</strong><span>P / R / mAP</span></div><div><strong>Real-time</strong><span>safety monitoring</span></div></div>
+      <div class="experience-columns"><p><b>Industrial AI.</b> Developed a YOLOv8 H₂S monitor-detection pilot and a full-stack ML interface using OpenCV, FastAPI, React and WebSockets, with scene understanding and local LLM summaries.</p><p><b>Digital operations.</b> Built and studied PI Vision dashboards across oil gathering, water injection and compressor systems, and audited 500+ AVEVA PI tags using PI Builder.</p></div>
+      <div class="tag-row"><span>YOLOv8</span><span>OpenCV</span><span>FastAPI</span><span>React</span><span>AVEVA PI</span><span>Industrial AI</span></div>
+    </div>
+  </article>
+
+  <article class="spacepoint-feature reveal">
+    <div><span class="experience-index">02</span><span class="eyebrow">JAN 2026–PRESENT · UAE</span><h3>SpacePoint</h3><p class="role-title">Facilitator / Engineering Intern</p></div>
+    <div><p class="experience-lead">Working across satellite engineering hardware and technical education.</p><p>Developing a CubeSat attitude determination and control system PCB schematic and layout in KiCad, alongside delivering satellite engineering workshops, demos and hands-on technical activities.</p><div class="tag-row"><span>KiCad</span><span>ADCS</span><span>CubeSat</span><span>PCB Design</span><span>Technical Facilitation</span></div></div>
+  </article>
+</section>
+
 <section id="work" class="section projects">
-  <div class="section-heading reveal"><div><div class="section-label">01 / SELECTED WORK</div><h2>Things I've taken from<br><em>“what if?” to working.</em></h2></div><p class="section-intro">A mix of robotics, edge AI, sustainable IoT and intelligent infrastructure.</p></div>
+  <div class="section-heading reveal"><div><div class="section-label">02 / SELECTED WORK</div><h2>Things I've taken from<br><em>“what if?” to working.</em></h2></div><p class="section-intro">A mix of robotics, edge AI, sustainable IoT and intelligent infrastructure.</p></div>
 
   <article id="avaa" class="case-study reveal">
     <div class="case-media"><img src="avaa-prototype.png" alt="AVAA working robot prototype" loading="lazy"><span class="case-index">01</span></div>
@@ -50,14 +81,6 @@
     <article class="project-card reveal"><div class="project-image"><img src="powersprout-prototype.png" alt="PowerSprout microbial fuel cell prototype" loading="lazy"><span>03</span><b>3RD PLACE · UOWD INNOVATION FAIR</b></div><div class="project-card-copy"><div class="eyebrow">SUSTAINABLE IOT · 2025</div><h3>PowerSprout</h3><p>An IoT-enabled microbial fuel cell prototype turning organic waste into electricity, with ESP32 sensing and a full-stack voltage monitoring dashboard.</p><div class="tag-row"><span>ESP32</span><span>Express.js</span><span>PostgreSQL</span><span>IoT</span></div></div></article>
     <article class="project-card text-card reveal"><span class="big-index">04</span><div class="eyebrow">INTELLIGENT INFRASTRUCTURE</div><h3>Smart campus architecture</h3><p>Designed ICT infrastructure for a multi-campus K–12 network serving 15,000+ students, integrating Wi-Fi 6, SD-WAN, zero-trust security and IoT monitoring.</p><div class="tag-row"><span>Network Design</span><span>IoT</span><span>Cloud</span><span>Digital Twins</span></div></article>
     <article class="project-card text-card dark-card reveal"><span class="big-index">05</span><div class="eyebrow">PERCEPTION & CONTROL</div><h3>From orbit<br>to navigation.</h3><p>CNN/LSTM models for simulated orbital-debris detection and trajectory forecasting, plus sensor-driven autonomous maze navigation in Webots.</p><div class="tag-row"><span>PyTorch</span><span>CNN/LSTM</span><span>C</span><span>Webots</span></div></article>
-  </div>
-</section>
-
-<section id="experience" class="section experience">
-  <div class="sticky-title reveal"><div class="section-label">02 / EXPERIENCE</div><h2>Built around<br><em>real constraints.</em></h2><p>Industry and engineering work where the output had to be more than a demo.</p></div>
-  <div class="timeline">
-    <article class="reveal"><span class="row-number">01</span><div><div class="timeline-meta"><span>SPACEPOINT</span><span>JAN 2026–PRESENT · UAE</span></div><h3>Facilitator / Engineering Intern</h3><p>Developing a CubeSat attitude determination and control system PCB in KiCad and delivering satellite engineering workshops, demos and technical activities.</p><div class="tag-row"><span>KiCad</span><span>ADCS</span><span>CubeSat</span><span>Technical Facilitation</span></div></div></article>
-    <article class="reveal"><span class="row-number">02</span><div><div class="timeline-meta"><span>ADNOC ONSHORE</span><span>JUL–SEP 2025 · ABU DHABI</span></div><h3>Digital Technical Solutions Intern</h3><p>Built a real-time industrial safety prototype using YOLOv8, OpenCV, FastAPI and React; integrated local AI summaries; worked with PI Vision dashboards; and audited 500+ AVEVA PI tags.</p><div class="impact-strip"><span>Industrial AI</span><span>Computer Vision</span><span>Full-stack ML</span><span>500+ PI tags</span></div></div></article>
   </div>
 </section>
 
