@@ -1,17 +1,373 @@
-const menu=document.querySelector('.menu');
-const nav=document.querySelector('nav');
-menu.addEventListener('click',()=>{const open=menu.getAttribute('aria-expanded')!=='true';menu.setAttribute('aria-expanded',String(open));nav.classList.toggle('open',open);menu.textContent=open?'Close −':'Menu +';});
-nav.querySelectorAll('a').forEach(link=>link.addEventListener('click',()=>{menu.setAttribute('aria-expanded','false');nav.classList.remove('open');menu.textContent='Menu +';}));
-document.querySelector('.project-toggle').addEventListener('click',event=>{const button=event.currentTarget;const panel=document.getElementById(button.getAttribute('aria-controls'));panel.hidden=!panel.hidden;button.setAttribute('aria-expanded',String(!panel.hidden));button.innerHTML=panel.hidden?'View project notes <span>↗</span>':'Close project notes <span>−</span>';});
+// ============================================================
+// VARENYA CHIVUKULA — PORTFOLIO V2
+// app.js
+// ============================================================
 
-const motionButton=document.querySelector('.butterfly-motion');
-const butterfly=document.querySelector('.flying-butterfly');
-const motionPreference=matchMedia('(prefers-reduced-motion: reduce)');
-function setButterflyPaused(paused){
-  butterfly.classList.toggle('paused',paused);
-  motionButton.setAttribute('aria-pressed',String(paused));
-  motionButton.textContent=paused?'Let butterfly fly':'Pause butterfly';
+
+// ------------------------------------------------------------
+// MOBILE NAVIGATION
+// ------------------------------------------------------------
+
+const menu = document.querySelector(".menu");
+const nav = document.querySelector("nav");
+
+if (menu && nav) {
+  menu.addEventListener("click", () => {
+    const open = menu.getAttribute("aria-expanded") !== "true";
+
+    menu.setAttribute("aria-expanded", String(open));
+    nav.classList.toggle("open", open);
+    menu.textContent = open ? "Close −" : "Menu +";
+  });
+
+  nav.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", () => {
+      menu.setAttribute("aria-expanded", "false");
+      nav.classList.remove("open");
+      menu.textContent = "Menu +";
+    });
+  });
 }
-setButterflyPaused(motionPreference.matches);
-motionButton.addEventListener('click',()=>setButterflyPaused(motionButton.getAttribute('aria-pressed')!=='true'));
-motionPreference.addEventListener('change',event=>setButterflyPaused(event.matches));
+
+
+// ------------------------------------------------------------
+// HEADER SCROLL STATE
+// ------------------------------------------------------------
+
+const header = document.querySelector("header");
+
+function updateHeader() {
+  if (!header) return;
+
+  header.classList.toggle("scrolled", window.scrollY > 30);
+}
+
+window.addEventListener("scroll", updateHeader, { passive: true });
+updateHeader();
+
+
+// ------------------------------------------------------------
+// PAGE PROGRESS BAR
+// ------------------------------------------------------------
+
+const progressBar = document.querySelector(".scroll-progress");
+
+function updateProgress() {
+  if (!progressBar) return;
+
+  const scrollableHeight =
+    document.documentElement.scrollHeight - window.innerHeight;
+
+  if (scrollableHeight <= 0) {
+    progressBar.style.transform = "scaleX(0)";
+    return;
+  }
+
+  const progress = Math.min(
+    Math.max(window.scrollY / scrollableHeight, 0),
+    1
+  );
+
+  progressBar.style.transform = `scaleX(${progress})`;
+}
+
+window.addEventListener("scroll", updateProgress, { passive: true });
+window.addEventListener("resize", updateProgress);
+updateProgress();
+
+
+// ------------------------------------------------------------
+// SCROLL REVEAL
+// ------------------------------------------------------------
+
+const revealElements = document.querySelectorAll(".reveal");
+
+const prefersReducedMotion = window.matchMedia(
+  "(prefers-reduced-motion: reduce)"
+);
+
+if ("IntersectionObserver" in window && !prefersReducedMotion.matches) {
+  const revealObserver = new IntersectionObserver(
+    (entries, observer) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+
+        entry.target.classList.add("visible");
+        observer.unobserve(entry.target);
+      });
+    },
+    {
+      threshold: 0.12,
+      rootMargin: "0px 0px -50px 0px",
+    }
+  );
+
+  revealElements.forEach((element) => {
+    revealObserver.observe(element);
+  });
+} else {
+  revealElements.forEach((element) => {
+    element.classList.add("visible");
+  });
+}
+
+
+// ------------------------------------------------------------
+// ACTIVE NAVIGATION SECTION
+// ------------------------------------------------------------
+
+const sections = document.querySelectorAll("main section[id]");
+const navigationLinks = document.querySelectorAll(
+  'nav a[href^="#"]'
+);
+
+if ("IntersectionObserver" in window && sections.length) {
+  const sectionObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+
+        const currentId = entry.target.id;
+
+        navigationLinks.forEach((link) => {
+          const target = link.getAttribute("href");
+          link.classList.toggle("active", target === `#${currentId}`);
+        });
+      });
+    },
+    {
+      threshold: 0.25,
+      rootMargin: "-25% 0px -55% 0px",
+    }
+  );
+
+  sections.forEach((section) => {
+    sectionObserver.observe(section);
+  });
+}
+
+
+// ------------------------------------------------------------
+// PROJECT DETAILS / EXPANDABLE CASE STUDIES
+// ------------------------------------------------------------
+
+const projectToggles = document.querySelectorAll(".project-toggle");
+
+projectToggles.forEach((button) => {
+  button.addEventListener("click", () => {
+    const panelId = button.getAttribute("aria-controls");
+    const panel = document.getElementById(panelId);
+
+    if (!panel) return;
+
+    const isOpening = panel.hidden;
+
+    panel.hidden = !isOpening;
+    button.setAttribute("aria-expanded", String(isOpening));
+
+    const openLabel =
+      button.dataset.openLabel || "View project details";
+    const closeLabel =
+      button.dataset.closeLabel || "Close project details";
+
+    button.innerHTML = isOpening
+      ? `${closeLabel} <span>−</span>`
+      : `${openLabel} <span>↗</span>`;
+  });
+});
+
+
+// ------------------------------------------------------------
+// PROJECT CARD POINTER EFFECT
+// ------------------------------------------------------------
+
+const interactiveCards = document.querySelectorAll(
+  ".project-card, .featured-project"
+);
+
+if (!prefersReducedMotion.matches) {
+  interactiveCards.forEach((card) => {
+    card.addEventListener("pointermove", (event) => {
+      const rect = card.getBoundingClientRect();
+
+      const x = ((event.clientX - rect.left) / rect.width) * 100;
+      const y = ((event.clientY - rect.top) / rect.height) * 100;
+
+      card.style.setProperty("--pointer-x", `${x}%`);
+      card.style.setProperty("--pointer-y", `${y}%`);
+    });
+
+    card.addEventListener("pointerleave", () => {
+      card.style.removeProperty("--pointer-x");
+      card.style.removeProperty("--pointer-y");
+    });
+  });
+}
+
+
+// ------------------------------------------------------------
+// BUTTERFLY
+// ------------------------------------------------------------
+
+const motionButton = document.querySelector(".butterfly-motion");
+const butterfly = document.querySelector(".flying-butterfly");
+
+function setButterflyPaused(paused) {
+  if (!butterfly || !motionButton) return;
+
+  butterfly.classList.toggle("paused", paused);
+
+  motionButton.setAttribute(
+    "aria-pressed",
+    String(paused)
+  );
+
+  motionButton.textContent = paused
+    ? "Let butterfly fly"
+    : "Pause butterfly";
+}
+
+if (butterfly && motionButton) {
+  setButterflyPaused(prefersReducedMotion.matches);
+
+  motionButton.addEventListener("click", () => {
+    const currentlyPaused =
+      motionButton.getAttribute("aria-pressed") === "true";
+
+    setButterflyPaused(!currentlyPaused);
+  });
+
+  if (typeof prefersReducedMotion.addEventListener === "function") {
+    prefersReducedMotion.addEventListener("change", (event) => {
+      setButterflyPaused(event.matches);
+    });
+  }
+}
+
+
+// ------------------------------------------------------------
+// SUBTLE HERO PARALLAX
+// ------------------------------------------------------------
+
+const heroVisual = document.querySelector(".hero-visual");
+
+function updateHeroParallax() {
+  if (!heroVisual || prefersReducedMotion.matches) return;
+
+  const scrollY = window.scrollY;
+
+  if (scrollY > window.innerHeight) return;
+
+  const movement = scrollY * 0.055;
+
+  heroVisual.style.transform = `translateY(${movement}px)`;
+}
+
+window.addEventListener(
+  "scroll",
+  updateHeroParallax,
+  { passive: true }
+);
+
+
+// ------------------------------------------------------------
+// CURRENT YEAR
+// ------------------------------------------------------------
+
+const yearElement = document.querySelector("[data-current-year]");
+
+if (yearElement) {
+  yearElement.textContent = new Date().getFullYear();
+}
+
+
+// ------------------------------------------------------------
+// EMAIL COPY BUTTON
+// ------------------------------------------------------------
+
+const copyEmailButton = document.querySelector("[data-copy-email]");
+
+if (copyEmailButton) {
+  copyEmailButton.addEventListener("click", async () => {
+    const email = copyEmailButton.dataset.copyEmail;
+
+    if (!email) return;
+
+    const originalText = copyEmailButton.textContent;
+
+    try {
+      await navigator.clipboard.writeText(email);
+
+      copyEmailButton.textContent = "Email copied ✓";
+
+      setTimeout(() => {
+        copyEmailButton.textContent = originalText;
+      }, 1800);
+    } catch (error) {
+      window.location.href = `mailto:${email}`;
+    }
+  });
+}
+
+
+// ------------------------------------------------------------
+// SMOOTH INTERNAL ANCHOR SCROLLING
+// ------------------------------------------------------------
+
+document.querySelectorAll('a[href^="#"]').forEach((link) => {
+  link.addEventListener("click", (event) => {
+    const href = link.getAttribute("href");
+
+    if (!href || href === "#") return;
+
+    const target = document.querySelector(href);
+
+    if (!target) return;
+
+    event.preventDefault();
+
+    target.scrollIntoView({
+      behavior: prefersReducedMotion.matches
+        ? "auto"
+        : "smooth",
+      block: "start",
+    });
+
+    history.replaceState(null, "", href);
+  });
+});
+
+
+// ------------------------------------------------------------
+// KEYBOARD ESCAPE SUPPORT
+// ------------------------------------------------------------
+
+document.addEventListener("keydown", (event) => {
+  if (event.key !== "Escape") return;
+
+  if (nav && nav.classList.contains("open")) {
+    nav.classList.remove("open");
+
+    if (menu) {
+      menu.setAttribute("aria-expanded", "false");
+      menu.textContent = "Menu +";
+      menu.focus();
+    }
+  }
+
+  projectToggles.forEach((button) => {
+    const panelId = button.getAttribute("aria-controls");
+    const panel = document.getElementById(panelId);
+
+    if (!panel || panel.hidden) return;
+
+    panel.hidden = true;
+    button.setAttribute("aria-expanded", "false");
+
+    const openLabel =
+      button.dataset.openLabel || "View project details";
+
+    button.innerHTML =
+      `${openLabel} <span>↗</span>`;
+  });
+});
