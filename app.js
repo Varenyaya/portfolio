@@ -50,7 +50,7 @@ updateHeader();
 // PAGE PROGRESS BAR
 // ------------------------------------------------------------
 
-const progressBar = document.querySelector(".scroll-progress");
+const progressBar = document.querySelector(".progress span");
 
 function updateProgress() {
   if (!progressBar) return;
@@ -59,7 +59,7 @@ function updateProgress() {
     document.documentElement.scrollHeight - window.innerHeight;
 
   if (scrollableHeight <= 0) {
-    progressBar.style.transform = "scaleX(0)";
+    progressBar.style.width = "0%";
     return;
   }
 
@@ -68,7 +68,7 @@ function updateProgress() {
     1
   );
 
-  progressBar.style.transform = `scaleX(${progress})`;
+  progressBar.style.width = `${progress * 100}%`;
 }
 
 window.addEventListener("scroll", updateProgress, { passive: true });
